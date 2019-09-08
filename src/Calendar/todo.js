@@ -17,19 +17,20 @@ export class ToDoList extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    var newItems = this.state.items.concat({
+      id: this.state.items.length,
+      name: this.state.value,
+      done: false,
+    })
     this.setState({
-      items: this.state.items.concat({
-        id: this.state.items.length,
-        name: this.state.value,
-        done: false,
-      }),
+      items: newItems,
       value: '',
     });
     this.textInput.value = '';
     const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
-        1}${this.props.value.getFullYear()}`;
-    localStorage.setItem(date, JSON.stringify(this.state.items));
-    
+      1}${this.props.value.getFullYear()}`;
+    localStorage.setItem(date, JSON.stringify(newItems));
+
   }
 
   componentDidMount() {
@@ -79,10 +80,10 @@ export class ToDoList extends Component {
                 </li>
               ))
             ) : (
-              <div />
-            )}
+                <div />
+              )}
           </ul>
-          <form onSubmit={this.handleSubmit}{...console.log(this.state.items)}>
+          <form onSubmit={this.handleSubmit}>
             <input
               type="text"
               placeholder="Today's Task"
