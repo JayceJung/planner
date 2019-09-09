@@ -58,6 +58,12 @@ export class ToDoList extends Component {
     });
   }
 
+  removeTask(id) {
+    this.setState({
+        items: this.state.items.filter(item => item.id !== id)
+    })
+  }
+
   // completeCheck() {
   //     var itemList = document.querySelectorAll("#list > button");
   //     for (var i = 0; i < itemList.length; i++) {
@@ -76,7 +82,7 @@ export class ToDoList extends Component {
             {this.state.items ? (
               this.state.items.map(item => (
                 <li id="list" key={item.id}>
-                  <button onClick={this.completeCheck}>{item.name}</button>
+                  <button onClick={this.completeCheck}>{item.name}</button><button onClick={this.removeTask(this.state.items.id)}>Delete</button>
                 </li>
               ))
             ) : (
