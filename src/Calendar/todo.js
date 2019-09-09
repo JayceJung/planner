@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import "./todo.css"
 
 export class ToDoList extends Component {
   constructor(props) {
     super(props);
-    this.state = { items: [], value: '' };
+    this.state = { items: [], value: "" };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetItems = this.resetItems.bind(this);
+    this.removeTask = this.removeTask.bind(this);
   }
 
   handleChange(event) {
@@ -20,17 +21,16 @@ export class ToDoList extends Component {
     var newItems = this.state.items.concat({
       id: this.state.items.length,
       name: this.state.value,
-      done: false,
-    })
+      done: false
+    });
     this.setState({
       items: newItems,
-      value: '',
+      value: ""
     });
-    this.textInput.value = '';
+    this.textInput.value = "";
     const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
       1}${this.props.value.getFullYear()}`;
     localStorage.setItem(date, JSON.stringify(newItems));
-
   }
 
   componentDidMount() {
@@ -38,7 +38,7 @@ export class ToDoList extends Component {
       1}${this.props.value.getFullYear()}`;
     const toDos = JSON.parse(localStorage.getItem(date));
     this.setState({
-      items: toDos || [],
+      items: toDos || []
     });
   }
 
@@ -47,30 +47,22 @@ export class ToDoList extends Component {
       1}${newProps.value.getFullYear()}`;
     const toDos = JSON.parse(localStorage.getItem(date));
     this.setState({
-      items: toDos || [],
+      items: toDos || []
     });
   }
 
   resetItems() {
     window.localStorage.clear();
     this.setState({
-      items: [],
+      items: []
     });
   }
 
   removeTask(id) {
     this.setState({
-        items: this.state.items.filter(item => item.id !== id)
-    })
+      items: this.state.items.filter(item => item.id !== id)
+    });
   }
-
-  // completeCheck() {
-  //     var itemList = document.querySelectorAll("#list > button");
-  //     for (var i = 0; i < itemList.length; i++) {
-  //         itemList[i].style.border = "1px solid #66ff33";
-  //     }
-  //     console.log(itemList[0]);
-  // }
 
   render() {
     return (
@@ -82,12 +74,15 @@ export class ToDoList extends Component {
             {this.state.items ? (
               this.state.items.map(item => (
                 <li id="list" key={item.id}>
-                  <button onClick={this.completeCheck}>{item.name}</button><button onClick={this.removeTask(this.state.items.id)}>Delete</button>
+                  <button onClick={this.completeCheck}>{item.name}</button>
+                  <button onClick={() => this.removeTask(item.id)}>
+                    Delete
+                  </button>
                 </li>
               ))
             ) : (
-                <div />
-              )}
+              <div />
+            )}
           </ul>
           <form onSubmit={this.handleSubmit}>
             <input
@@ -97,8 +92,8 @@ export class ToDoList extends Component {
               ref={input => (this.textInput = input)}
             />
             <button type="submit" disabled={!this.state.value}>
-              {' '}
-              Add Task{' '}
+              {" "}
+              Add Task{" "}
             </button>
           </form>
         </div>
