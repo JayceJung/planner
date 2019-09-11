@@ -1,10 +1,14 @@
 import React, { Component } from "react";
-// import "./todo.css"
+import deleteButton from "./image/delete.png";
+import resetButton from "./image/reset.png";
+import Overlay from "./overlay.js";
+import "./reset.css";
+import "./todo.css";
 
 export class ToDoList extends Component {
   constructor(props) {
     super(props);
-    this.state = { items: [], value: "" };
+    this.state = { items: [], value: "", overlay: "none " };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -59,39 +63,68 @@ export class ToDoList extends Component {
   }
 
   removeTask(id) {
+    var newItems = this.state.items.filter(item => item.id !== id);
     this.setState({
-      items: this.state.items.filter(item => item.id !== id)
+      items: newItems
     });
+    const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
+      1}${this.props.value.getFullYear()}`;
+    localStorage.setItem(date, JSON.stringify(newItems));
   }
 
   render() {
     return (
       <div className="mainWrap">
         <div className="header">
-          <p>{this.props.value.toString()}</p>
-          <button onClick={this.resetItems}>Reset Items</button>
+          <div className="menuLine">
+            <p id="todayDate">
+              {this.props.value.getFullYear() +
+                "-" +
+                (this.props.value.getMonth() + 1) +
+                "-" +
+                this.props.value.getDate()}
+            </p>
+            <button
+              id="reset"
+              onClick={() => this.setState({ overlay: "block" })}
+            >
+              <img src={resetButton} alt="reset" id="resetIcon" />
+            </button>
+          </div>
+          <Overlay
+            onYes={() => {
+              this.resetItems();
+              this.setState({ overlay: "none" });
+            }}
+            onNo={() => this.setState({ overlay: "none" })}
+            style={{ display: this.state.overlay }}
+          />
+
           <ul>
             {this.state.items ? (
               this.state.items.map(item => (
-                <li id="list" key={item.id}>
-                  <button onClick={this.completeCheck}>{item.name}</button>
-                  <button onClick={() => this.removeTask(item.id)}>
-                    Delete
+                <li id="list" key={item.id}>                 
+                  <button id="remove" onClick={() => this.removeTask(item.id)}>
+                    <img src={deleteButton} alt="delete" id="deleteIcon" />
                   </button>
+                  <p id="complete">            
+                    {item.name}
+                  </p>
                 </li>
               ))
             ) : (
               <div />
             )}
           </ul>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit} id="formMenu">
             <input
+              id="inputBar"
               type="text"
               placeholder="Today's Task"
               onChange={this.handleChange}
               ref={input => (this.textInput = input)}
             />
-            <button type="submit" disabled={!this.state.value}>
+            <button type="submit" disabled={!this.state.value} id="addTask">
               {" "}
               Add Task{" "}
             </button>
