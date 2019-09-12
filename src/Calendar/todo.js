@@ -15,6 +15,7 @@ export class ToDoList extends Component {
     this.resetItems = this.resetItems.bind(this);
     this.removeTask = this.removeTask.bind(this);
     this.changeDone = this.changeDone.bind(this);
+    this.changeColor = this.changeColor.bind(this);
   }
 
   //event handler for when user adds text to form
@@ -83,6 +84,16 @@ export class ToDoList extends Component {
     localStorage.setItem(date, JSON.stringify(newItems));
   }
 
+  changeColor() {
+    var itemList = document.querySelectorAll('#itemName');
+    for (var i = 0; i < this.state.items.length; i++) {
+      if (this.state.items[i].done === false) {
+        itemList[i].style.border = "3px solid #00ff00";
+      }
+    }
+
+  }
+
   //used to change done value, called when checkbox is clicked
   changeDone(id) {
     this.setState((state) => {
@@ -92,7 +103,13 @@ export class ToDoList extends Component {
       };
     })
     console.log(this.state.items);
+<<<<<<< HEAD
+=======
+    this.changeColor();
+>>>>>>> 1251adba4822014c92d612a059615429e147cf7d
   }
+
+  
 
   render() {
     return (
@@ -143,7 +160,7 @@ export class ToDoList extends Component {
           </form>
 
           {/* task list, created when this.state.items is true */}
-          <ul>
+          <ul id="listInterface">
             {this.state.items ? (
               this.state.items.map(item => (
                 <li key={item.id} className="list">
@@ -155,7 +172,8 @@ export class ToDoList extends Component {
                       <img src={deleteButton} alt="delete" id="deleteIcon" />
                     </button>
                     <p id="itemName">{item.name}</p>
-                    <input type="checkbox" id="checkComplete" onClick={() => this.changeDone(item.id)} />
+                    <input type="checkbox" id="checkComplete" 
+                    onClick={() => this.changeDone(item.id)} />
                   </div>
                 </li>
               ))
