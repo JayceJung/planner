@@ -38,7 +38,7 @@ export class ToDoList extends Component {
     const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
       1}${this.props.value.getFullYear()}`;
     localStorage.setItem(date, JSON.stringify(newItems));
-
+    console.log(newItems);
     /*localStorage used to save information from previous sessions
       JSON.stringify to convert to string
     */
@@ -91,6 +91,7 @@ export class ToDoList extends Component {
         items: state.items
       };
     })
+    console.log(this.state.items);
   }
 
   render() {
