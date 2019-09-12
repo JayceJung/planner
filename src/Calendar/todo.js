@@ -131,10 +131,10 @@ export class ToDoList extends Component {
           </form>
           
           {/* task list, created when this.state.items is true */}
-          <ul>
+          <ul id="listInterface">
             {this.state.items ? (
               this.state.items.map(item => (
-                <li key={item.id} id="list">
+                <li key={item.id} className="list">
                   <div id="listItem">
                     <button
                       id="remove"

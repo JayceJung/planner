@@ -38,18 +38,23 @@ input {
   margin: 10px;
 }
 
-#list {
+#listInterface {
+  transition: all 0.5s ease-out;
+}
+
+.list {
   width: 100%;
+  height: 100%;
   float: left;
 }
 
-#listItem::after {
+.listItem::after {
   content: "";
   display: block;
   clear: both;
 }
 
-#list:nth-child(odd) {
+.list:nth-child(odd) {
   background-color: #d4d4d4;
 }
 
@@ -138,7 +143,6 @@ input {
 }
 
 .deleteButton:hover {
-  
   background-color: #b3b3b3;
 }
 
