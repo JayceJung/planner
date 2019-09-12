@@ -108,8 +108,7 @@ export class ToDoList extends Component {
               ref={input => (this.textInput = input)}
             />
             <button type="submit" disabled={!this.state.value} id="addTask">
-              {" "}
-              Add Task{" "}
+              Add Task
             </button>
           </form>
           <ul>

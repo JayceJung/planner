@@ -100,20 +100,46 @@ input {
   left: 0;
   right: 0;
   display: none;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8); 
+  
 }
 
 #overlayText {
   text-align: center;
-  width: 600px;
-  height: 400px;
+  box-sizing: border-box;
+  padding: 50px;
+  width: 500px;
+  height: 200px;
+  font-size: 1.3em;
+  line-height: 1.5em;
   background-color: #ccc;
+  border: 3px solid black;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 50%;
   left: 50%;
   border-radius: 5px;
   transform: translate(-50%, -50%);
+}
+
+.deleteButton {
+  padding: 12px 20px 12px;
+  margin: 8px 30px;
+  font-size: 0.9em;
+  font-weight: 500;
+  box-sizing: border-box;
+  background-color: #ccc;
+  border: none;
+  /* border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid gray; */
+  transition: background-color 250ms;
+}
+
+.deleteButton:hover {
+  
+  background-color: #b3b3b3;
 }
 
 #formMenu {
