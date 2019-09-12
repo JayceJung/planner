@@ -14,6 +14,7 @@ export class ToDoList extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetItems = this.resetItems.bind(this);
     this.removeTask = this.removeTask.bind(this);
+    this.changeDone = this.changeDone.bind(this);
   }
 
   //event handler for when user adds text to form
@@ -82,6 +83,16 @@ export class ToDoList extends Component {
     localStorage.setItem(date, JSON.stringify(newItems));
   }
 
+  //used to change done value, called when checkbox is clicked
+  changeDone(id) {
+    this.setState((state) => {
+      state.items[id].done = !state.items[id].done;
+      return {
+        items: state.items
+      };
+    })
+  }
+
   render() {
     return (
       <div className="mainWrap">
@@ -129,7 +140,7 @@ export class ToDoList extends Component {
               Add Task
             </button>
           </form>
-          
+
           {/* task list, created when this.state.items is true */}
           <ul>
             {this.state.items ? (
@@ -143,6 +154,7 @@ export class ToDoList extends Component {
                       <img src={deleteButton} alt="delete" id="deleteIcon" />
                     </button>
                     <p id="itemName">{item.name}</p>
+                    <input type="checkbox" id="checkComplete" onClick={() => this.changeDone(item.id)} />
                   </div>
                 </li>
               ))
