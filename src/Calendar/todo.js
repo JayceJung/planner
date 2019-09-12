@@ -16,10 +16,12 @@ export class ToDoList extends Component {
     this.removeTask = this.removeTask.bind(this);
   }
 
+  //event handler for when user adds text to form
   handleChange(event) {
     this.setState({ value: event.target.value });
   }
 
+  //event handler for when a new item is submitted into the form
   handleSubmit(event) {
     event.preventDefault();
     var newItems = this.state.items.concat({
@@ -35,8 +37,13 @@ export class ToDoList extends Component {
     const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
       1}${this.props.value.getFullYear()}`;
     localStorage.setItem(date, JSON.stringify(newItems));
+
+    /*localStorage used to save information from previous sessions
+      JSON.stringify to convert to string
+    */
   }
 
+  //called after render()
   componentDidMount() {
     const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
       1}${this.props.value.getFullYear()}`;
@@ -46,6 +53,7 @@ export class ToDoList extends Component {
     });
   }
 
+  //called when props value changes, i.e. the current selected date
   componentWillReceiveProps(newProps) {
     const date = `${newProps.value.getDate()}${newProps.value.getMonth() +
       1}${newProps.value.getFullYear()}`;
@@ -55,6 +63,7 @@ export class ToDoList extends Component {
     });
   }
 
+  //used to clear local storage, and set items to empty - used for reset scenario
   resetItems() {
     window.localStorage.clear();
     this.setState({
@@ -62,6 +71,7 @@ export class ToDoList extends Component {
     });
   }
 
+  //used to remove task, task identified by id (position in items object)
   removeTask(id) {
     var newItems = this.state.items.filter(item => item.id !== id);
     this.setState({
@@ -77,6 +87,7 @@ export class ToDoList extends Component {
       <div className="mainWrap">
         <div className="header">
           <div className="menuLine">
+            {/* display current selected date */}
             <p id="todayDate">
               {this.props.value.getFullYear() +
                 "-" +
@@ -84,13 +95,16 @@ export class ToDoList extends Component {
                 "-" +
                 this.props.value.getDate()}
             </p>
+
+            {/* Reset button */}
             <button
               id="reset"
-              onClick={() => this.setState({ overlay: "block" })}
-            >
+              onClick={() => this.setState({ overlay: "block" })} >
               <img src={resetButton} alt="reset" id="resetIcon" />
             </button>
           </div>
+
+          {/* overlay.js gets displayed on reset's onClick handler */}
           <Overlay
             onYes={() => {
               this.resetItems();
@@ -99,6 +113,8 @@ export class ToDoList extends Component {
             onNo={() => this.setState({ overlay: "none" })}
             style={{ display: this.state.overlay }}
           />
+
+          {/* form, where user inputs tasks */}
           <form onSubmit={this.handleSubmit} id="formMenu">
             <input
               id="inputBar"
@@ -107,11 +123,14 @@ export class ToDoList extends Component {
               onChange={this.handleChange}
               ref={input => (this.textInput = input)}
             />
+
+            {/* submit button */}
             <button type="submit" disabled={!this.state.value} id="addTask">
-              {" "}
-              Add Task{" "}
+              Add Task
             </button>
           </form>
+          
+          {/* task list, created when this.state.items is true */}
           <ul>
             {this.state.items ? (
               this.state.items.map(item => (
@@ -128,8 +147,8 @@ export class ToDoList extends Component {
                 </li>
               ))
             ) : (
-              <div />
-            )}
+                <div />
+              )}
           </ul>
         </div>
       </div>
