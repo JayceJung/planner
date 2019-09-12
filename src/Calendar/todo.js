@@ -99,23 +99,6 @@ export class ToDoList extends Component {
             onNo={() => this.setState({ overlay: "none" })}
             style={{ display: this.state.overlay }}
           />
-
-          <ul>
-            {this.state.items ? (
-              this.state.items.map(item => (
-                <li id="list" key={item.id}>                 
-                  <button id="remove" onClick={() => this.removeTask(item.id)}>
-                    <img src={deleteButton} alt="delete" id="deleteIcon" />
-                  </button>
-                  <p id="complete">            
-                    {item.name}
-                  </p>
-                </li>
-              ))
-            ) : (
-              <div />
-            )}
-          </ul>
           <form onSubmit={this.handleSubmit} id="formMenu">
             <input
               id="inputBar"
@@ -129,6 +112,25 @@ export class ToDoList extends Component {
               Add Task{" "}
             </button>
           </form>
+          <ul>
+            {this.state.items ? (
+              this.state.items.map(item => (
+                <li key={item.id} id="list">
+                  <div id="listItem">
+                    <button
+                      id="remove"
+                      onClick={() => this.removeTask(item.id)}
+                    >
+                      <img src={deleteButton} alt="delete" id="deleteIcon" />
+                    </button>
+                    <p id="itemName">{item.name}</p>
+                  </div>
+                </li>
+              ))
+            ) : (
+              <div />
+            )}
+          </ul>
         </div>
       </div>
     );
