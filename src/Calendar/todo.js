@@ -131,7 +131,7 @@ export class ToDoList extends Component {
           </form>
           
           {/* task list, created when this.state.items is true */}
-          <ul id="listInterface">
+          <ul>
             {this.state.items ? (
               this.state.items.map(item => (
                 <li key={item.id} className="list">
