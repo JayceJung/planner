@@ -86,7 +86,7 @@ input {
   height: 40px;
 }
 
-#deleteIcon {
+#deleteIcon, #completeIcon {
   width: 25px;
   height: 25px;
 }
