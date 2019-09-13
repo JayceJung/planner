@@ -14,8 +14,8 @@ export class ToDoList extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetItems = this.resetItems.bind(this);
     this.removeTask = this.removeTask.bind(this);
-    this.changeDone = this.changeDone.bind(this);
-  //  this.changeColor = this.changeColor.bind(this);
+    //  this.changeDone = this.changeDone.bind(this);
+    this.changeColor = this.changeColor.bind(this);
   }
 
   //event handler for when user adds text to form
@@ -85,31 +85,17 @@ export class ToDoList extends Component {
     localStorage.setItem(date, JSON.stringify(newItems));
   }
 
-  // changeColor(id) {
-  //   ;
-  //   // console.log(itemList);
-    
-  // }
-
-  //used to change done value, called when checkbox is clicked
-  changeDone(id) {
-    // const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
-    //   1}${this.props.value.getFullYear()}`;
+  changeColor() {
     var itemList = document.querySelectorAll("#itemName");
-    if (this.state.items[id].done === false) {
-      itemList[id].style.borderBottom = "2px solid #00ff00";
-    } else {
-      itemList[id].style.borderBottom = "2px solid #f44336";
-    }
-    this.setState(state => {
-      state.items[id].done = !state.items[id].done;
-      console.log(this.state.items[id].done);
-      console.log(this.state.items);
-      return {
-        items: state.items
+    for (var i = 0; i < itemList.length; i++) {
+      itemList[i].onClick = function() {
+        if (itemList[i].style.borderBottomColor == "#f44336") {
+          itemList[i].style.borderBottomColor = "#00ff00";
+        } else {
+          itemList[i].style.borderBottomColor = "#f44336";
+        }
       };
-      // localStorage.setItem(date, JSON.stringify(this.state.items));
-    });
+    }
   }
 
   render() {
@@ -162,6 +148,7 @@ export class ToDoList extends Component {
           </form>
 
           {/* task list, created when this.state.items is true */}
+          <p>TODOs :</p>
           <ul id="listInterface">
             {this.state.items ? (
               this.state.items.map(item => (
@@ -173,15 +160,7 @@ export class ToDoList extends Component {
                     >
                       <img src={deleteButton} alt="delete" id="deleteIcon" />
                     </button>
-                    <button
-                      id="itemName"
-                      onClick={() => {
-                        this.changeDone(item.id);
-                      //  this.changeColor(item.id);
-                      }}
-                    >
-                      {item.name}
-                    </button>
+                    <p id="itemName">{item.name}</p>
                     {/* <input type="checkbox" id="checkComplete" /> */}
                   </div>
                 </li>
@@ -190,6 +169,9 @@ export class ToDoList extends Component {
               <div />
             )}
           </ul>
+          <div>
+            <p>COMPLETED :</p>
+          </div>
         </div>
       </div>
     );
