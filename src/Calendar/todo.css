@@ -54,18 +54,17 @@ input {
   background-color: #d4d4d4;
 }
 
-#remove {
+.remove {
   margin: 10px;
   padding: 10px 0px;
   float: left;
 }
 
-#itemName {
+.itemName {
   color: black;
   background: none;
-  border:none;
-  border-bottom: 2px solid black;
   padding: 10px 15px;
+  border-bottom: 3px solid black;
   font-weight: 700;
   text-align: center;
   text-decoration: none;
@@ -74,7 +73,15 @@ input {
   margin: 10px 20px;
 }
 
-#remove,
+#todoName {
+  border-bottom-color: red;
+}
+
+#completedName {
+  border-bottom-color: #27D507;
+}
+
+.remove,
 #reset {
   background: none;
   border: none;
@@ -91,7 +98,7 @@ input {
   height: 25px;
 }
 
-#remove:hover,
+.remove:hover,
 #resetIcon:hover {
   cursor: pointer;
 }
@@ -134,10 +141,6 @@ input {
   box-sizing: border-box;
   background-color: #ccc;
   border: none;
-  /* border-top: none;
-  border-right: none;
-  border-left: none;
-  border-bottom: 2px solid gray; */
   transition: background-color 250ms;
 }
 
@@ -168,4 +171,24 @@ input {
   margin: 8px 0;
   box-sizing: border-box;
   border: 3px solid #ccc;
+}
+
+#taskBar::after {
+  content: "";
+  display: block;
+  clear: both;
+} 
+
+#todoTask {
+  width: 48%;
+  padding: 1%;
+  box-sizing: border-box;
+  float: left;
+}
+
+#completedTask {
+  width: 48%;
+  padding: 1%;
+  box-sizing: border-box;
+  float: left;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import deleteButton from "./image/delete.png";
 import resetButton from "./image/reset.png";
+import completeButton from "./image/complete.png";
 import Overlay from "./overlay.js";
 import "./reset.css";
 import "./todo.css";
@@ -14,14 +15,9 @@ export class ToDoList extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetItems = this.resetItems.bind(this);
     this.removeTask = this.removeTask.bind(this);
-<<<<<<< HEAD
-    //  this.changeDone = this.changeDone.bind(this);
-    this.changeColor = this.changeColor.bind(this);
-=======
     //this.changeDone = this.changeDone.bind(this);
-    //  this.changeColor = this.changeColor.bind(this);
+    //this.changeColor = this.changeColor.bind(this);
     //this.addToCompletedItems = this.addToCompletedItems.bind(this);
->>>>>>> ec27fe787769a65c19e02df0e5457537dcc3daf5
   }
 
   //event handler for when user adds text to form
@@ -89,30 +85,15 @@ export class ToDoList extends Component {
     localStorage.setItem(date, JSON.stringify(newItems));
   }
 
-<<<<<<< HEAD
-  changeColor() {
-    var itemList = document.querySelectorAll("#itemName");
-    for (var i = 0; i < itemList.length; i++) {
-      itemList[i].onClick = function() {
-        if (itemList[i].style.borderBottomColor == "#f44336") {
-          itemList[i].style.borderBottomColor = "#00ff00";
-        } else {
-          itemList[i].style.borderBottomColor = "#f44336";
-        }
-      };
-    }
-=======
   //used to change done value, called when checkbox is clicked
   changeDone(id) {
-    this.setState((state) => {
+    this.setState(state => {
       state.items[id].done = !state.items[id].done;
       return {
         items: state.items
       };
     });
->>>>>>> ec27fe787769a65c19e02df0e5457537dcc3daf5
   }
-
 
   // //method to add an item from todos to completed items
   // addToCompletedItems(itemId) {
@@ -189,64 +170,73 @@ export class ToDoList extends Component {
           </form>
 
           {/* task list, created when this.state.items is true */}
-<<<<<<< HEAD
-          <p>TODOs :</p>
-=======
-          <p>TODOs: </p>
->>>>>>> ec27fe787769a65c19e02df0e5457537dcc3daf5
-          <ul id="listInterface">
-            {this.state.items ? (
-              this.state.items.filter(item => !item.done).map(item => (
-                <li key={item.id} className="list">
-                  <div id="listItem">
-                    <button
-                      id="remove"
-                      onClick={() => this.removeTask(item.id)}
-                    >
-                      <img src={deleteButton} alt="delete" id="deleteIcon" />
-                    </button>
-<<<<<<< HEAD
-                    <p id="itemName">{item.name}</p>
-                    {/* <input type="checkbox" id="checkComplete" /> */}
-=======
-                    <button onClick={() => this.changeDone(item.id)}>
-                      <img src={resetButton} alt="add" id="completeIcon" />
-                    </button>
-                    <p id="itemName">
-                      {item.name}
-                    </p>
-                  </div>
-                </li>
-              ))
-            ) : (
-                <div />
-              )}
-          </ul>
-          <p>COMPLETED: </p>
-          <ul>
-            {this.state.items ? (
-              this.state.items.filter(item => item.done).map(item => (
-                <li key={item.id} className="list">
-                  <div id="listItem">
-                    <button
-                      id="remove"
-                      onClick={() => this.removeTask(item.id)}
-                    >
-                      <img src={deleteButton} alt="delete" id="deleteIcon" />
-                    </button>
-                    <p id="itemName">
-                      {item.name}
-                    </p>
->>>>>>> ec27fe787769a65c19e02df0e5457537dcc3daf5
-                  </div>
-                </li>
-              ))
-            ) : (
-                <div />
-              )}
-          </ul>
-          <div>
-            <p>COMPLETED :</p>
+          <div id="taskBar">
+            <div id="todoTask">
+              <p>TODOs: </p>
+              <ul id="listInterface">
+                {this.state.items ? (
+                  this.state.items
+                    .filter(item => !item.done)
+                    .map(item => (
+                      <li key={item.id} className="list">
+                        <div id="listItem">
+                          <button
+                            className="remove"
+                            onClick={() => this.removeTask(item.id)}
+                          >
+                            <img
+                              src={deleteButton}
+                              alt="delete"
+                              id="deleteIcon"
+                            />
+                          </button>
+                          <button
+                            className="remove"
+                            onClick={() => this.changeDone(item.id)}
+                          >
+                            <img
+                              src={completeButton}
+                              alt="add"
+                              id="completeIcon"
+                            />
+                          </button>
+                          <p className="itemName" id="todoName">{item.name}</p>                          
+                        </div>
+                      </li>
+                    ))
+                ) : (
+                  <div />
+                )}
+              </ul>
+            </div>
+            <div id="completedTask">
+              <p>COMPLETED: </p>
+              <ul>
+                {this.state.items ? (
+                  this.state.items
+                    .filter(item => item.done)
+                    .map(item => (
+                      <li key={item.id} className="list">
+                        <div id="listItem">
+                          <button
+                            className="remove"
+                            onClick={() => this.removeTask(item.id)}
+                          >
+                            <img
+                              src={deleteButton}
+                              alt="delete"
+                              id="deleteIcon"
+                            />
+                          </button>
+                          <p className="itemName" id="completedName">{item.name}</p>
+                        </div>
+                      </li>
+                    ))
+                ) : (
+                  <div />
+                )}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
