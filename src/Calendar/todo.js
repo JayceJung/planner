@@ -15,7 +15,7 @@ export class ToDoList extends Component {
     this.resetItems = this.resetItems.bind(this);
     this.removeTask = this.removeTask.bind(this);
     this.changeDone = this.changeDone.bind(this);
-    this.changeColor = this.changeColor.bind(this);
+  //  this.changeColor = this.changeColor.bind(this);
   }
 
   //event handler for when user adds text to form
@@ -63,6 +63,7 @@ export class ToDoList extends Component {
     this.setState({
       items: toDos || []
     });
+    console.log(this.state.items);
   }
 
   //used to clear local storage, and set items to empty - used for reset scenario
@@ -84,32 +85,32 @@ export class ToDoList extends Component {
     localStorage.setItem(date, JSON.stringify(newItems));
   }
 
-  changeColor() {
-    var itemList = document.querySelectorAll('#itemName');
-    for (var i = 0; i < this.state.items.length; i++) {
-      if (this.state.items[i].done === false) {
-        itemList[i].style.border = "3px solid #00ff00";
-      }
-    }
-
-  }
+  // changeColor(id) {
+  //   ;
+  //   // console.log(itemList);
+    
+  // }
 
   //used to change done value, called when checkbox is clicked
   changeDone(id) {
-    this.setState((state) => {
+    // const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
+    //   1}${this.props.value.getFullYear()}`;
+    var itemList = document.querySelectorAll("#itemName");
+    if (this.state.items[id].done === false) {
+      itemList[id].style.borderBottom = "2px solid #00ff00";
+    } else {
+      itemList[id].style.borderBottom = "2px solid #f44336";
+    }
+    this.setState(state => {
       state.items[id].done = !state.items[id].done;
+      console.log(this.state.items[id].done);
+      console.log(this.state.items);
       return {
         items: state.items
       };
-    })
-    console.log(this.state.items);
-<<<<<<< HEAD
-=======
-    this.changeColor();
->>>>>>> 1251adba4822014c92d612a059615429e147cf7d
+      // localStorage.setItem(date, JSON.stringify(this.state.items));
+    });
   }
-
-  
 
   render() {
     return (
@@ -128,7 +129,8 @@ export class ToDoList extends Component {
             {/* Reset button */}
             <button
               id="reset"
-              onClick={() => this.setState({ overlay: "block" })} >
+              onClick={() => this.setState({ overlay: "block" })}
+            >
               <img src={resetButton} alt="reset" id="resetIcon" />
             </button>
           </div>
@@ -171,15 +173,22 @@ export class ToDoList extends Component {
                     >
                       <img src={deleteButton} alt="delete" id="deleteIcon" />
                     </button>
-                    <p id="itemName">{item.name}</p>
-                    <input type="checkbox" id="checkComplete" 
-                    onClick={() => this.changeDone(item.id)} />
+                    <button
+                      id="itemName"
+                      onClick={() => {
+                        this.changeDone(item.id);
+                      //  this.changeColor(item.id);
+                      }}
+                    >
+                      {item.name}
+                    </button>
+                    {/* <input type="checkbox" id="checkComplete" /> */}
                   </div>
                 </li>
               ))
             ) : (
-                <div />
-              )}
+              <div />
+            )}
           </ul>
         </div>
       </div>
