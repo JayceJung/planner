@@ -8,14 +8,15 @@ import "./todo.css";
 export class ToDoList extends Component {
   constructor(props) {
     super(props);
-    this.state = { items: [], value: "", overlay: "none " };
+    this.state = { items: [], completedItems: [], value: "", overlay: "none " };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetItems = this.resetItems.bind(this);
     this.removeTask = this.removeTask.bind(this);
-    this.changeDone = this.changeDone.bind(this);
-  //  this.changeColor = this.changeColor.bind(this);
+    //this.changeDone = this.changeDone.bind(this);
+    //  this.changeColor = this.changeColor.bind(this);
+    //this.addToCompletedItems = this.addToCompletedItems.bind(this);
   }
 
   //event handler for when user adds text to form
@@ -39,7 +40,6 @@ export class ToDoList extends Component {
     const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
       1}${this.props.value.getFullYear()}`;
     localStorage.setItem(date, JSON.stringify(newItems));
-    console.log(newItems);
     /*localStorage used to save information from previous sessions
       JSON.stringify to convert to string
     */
@@ -63,7 +63,6 @@ export class ToDoList extends Component {
     this.setState({
       items: toDos || []
     });
-    console.log(this.state.items);
   }
 
   //used to clear local storage, and set items to empty - used for reset scenario
@@ -85,32 +84,41 @@ export class ToDoList extends Component {
     localStorage.setItem(date, JSON.stringify(newItems));
   }
 
-  // changeColor(id) {
-  //   ;
-  //   // console.log(itemList);
-    
-  // }
-
   //used to change done value, called when checkbox is clicked
   changeDone(id) {
-    // const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
-    //   1}${this.props.value.getFullYear()}`;
-    var itemList = document.querySelectorAll("#itemName");
-    if (this.state.items[id].done === false) {
-      itemList[id].style.borderBottom = "2px solid #00ff00";
-    } else {
-      itemList[id].style.borderBottom = "2px solid #f44336";
-    }
-    this.setState(state => {
+    this.setState((state) => {
       state.items[id].done = !state.items[id].done;
-      console.log(this.state.items[id].done);
-      console.log(this.state.items);
       return {
         items: state.items
       };
-      // localStorage.setItem(date, JSON.stringify(this.state.items));
     });
   }
+
+
+  // //method to add an item from todos to completed items
+  // addToCompletedItems(itemId) {
+  //   var itemArray = this.state.items.filter(item => item.id === itemId);
+  //   var item = itemArray[0];
+  //   var currentIndex = this.state.items.indexOf(item);
+  //   var newItems = this.state.items.filter(item => item.id !== itemId);
+  //   console.log(currentIndex);
+  //   this.setState((state) => {
+  //     state.completedItems.push({
+  //       id: itemId,
+  //       name: state.items[currentIndex].name,
+  //       done: state.items[currentIndex].done
+  //     });
+  //     return {
+  //       items: newItems,
+  //       completedItems: state.completedItems || []
+  //     };
+  //   });
+  //   const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
+  //     1}${this.props.value.getFullYear()}`;
+  //   localStorage.setItem(date, JSON.stringify(newItems));
+  //   localStorage.setItem(date, JSON.stringify(this.state.completedItems));
+  //   console.log(this.state.completedItems);
+  // }
 
   render() {
     return (
@@ -162,9 +170,10 @@ export class ToDoList extends Component {
           </form>
 
           {/* task list, created when this.state.items is true */}
+          <p>TODOs: </p>
           <ul id="listInterface">
             {this.state.items ? (
-              this.state.items.map(item => (
+              this.state.items.filter(item => !item.done).map(item => (
                 <li key={item.id} className="list">
                   <div id="listItem">
                     <button
@@ -173,22 +182,40 @@ export class ToDoList extends Component {
                     >
                       <img src={deleteButton} alt="delete" id="deleteIcon" />
                     </button>
-                    <button
-                      id="itemName"
-                      onClick={() => {
-                        this.changeDone(item.id);
-                      //  this.changeColor(item.id);
-                      }}
-                    >
-                      {item.name}
+                    <button onClick={() => this.changeDone(item.id)}>
+                      <img src={resetButton} alt="add" id="completeIcon" />
                     </button>
-                    {/* <input type="checkbox" id="checkComplete" /> */}
+                    <p id="itemName">
+                      {item.name}
+                    </p>
                   </div>
                 </li>
               ))
             ) : (
-              <div />
-            )}
+                <div />
+              )}
+          </ul>
+          <p>COMPLETED: </p>
+          <ul>
+            {this.state.items ? (
+              this.state.items.filter(item => item.done).map(item => (
+                <li key={item.id} className="list">
+                  <div id="listItem">
+                    <button
+                      id="remove"
+                      onClick={() => this.removeTask(item.id)}
+                    >
+                      <img src={deleteButton} alt="delete" id="deleteIcon" />
+                    </button>
+                    <p id="itemName">
+                      {item.name}
+                    </p>
+                  </div>
+                </li>
+              ))
+            ) : (
+                <div />
+              )}
           </ul>
         </div>
       </div>
