@@ -1,6 +1,9 @@
 # Daily Planner
 Welcome to Daily Planner!
 
+Try out our [demo](https://jaycejung.github.io/planner/)!
+
+
 ## Summary
 Daily Planner is a React app to help users organize their daily tasks.
 Users can select any date in the calendar, and add tasks for that date.
