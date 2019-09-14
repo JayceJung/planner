@@ -15,7 +15,7 @@ export class ToDoList extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetItems = this.resetItems.bind(this);
     this.removeTask = this.removeTask.bind(this);
-    //this.changeDone = this.changeDone.bind(this);
+    this.changeDone = this.changeDone.bind(this);
     //this.changeColor = this.changeColor.bind(this);
     //this.addToCompletedItems = this.addToCompletedItems.bind(this);
   }
@@ -87,12 +87,15 @@ export class ToDoList extends Component {
 
   //used to change done value, called when checkbox is clicked
   changeDone(id) {
-    this.setState(state => {
-      state.items[id].done = !state.items[id].done;
-      return {
-        items: state.items
-      };
+    this.state.items[id].done = !this.state.items[id].done;
+    var newItems = this.state.items;
+    this.setState({   
+        items: newItems
     });
+    const date = `${this.props.value.getDate()}${this.props.value.getMonth() +
+      1}${this.props.value.getFullYear()}`;
+    localStorage.setItem(date, JSON.stringify(newItems));
+    console.log(this.state.items);
   }
 
   // //method to add an item from todos to completed items
